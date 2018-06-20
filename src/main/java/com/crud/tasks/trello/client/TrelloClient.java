@@ -21,7 +21,7 @@ public class TrelloClient {
     @Value("${trello.app.key}")
     private String trelloAppKey;
 
-    @Value("{trello.app.token}")
+    @Value("${trello.app.token}")
     private String trelloToken;
 
     @Autowired
