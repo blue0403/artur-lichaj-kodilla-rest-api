@@ -18,6 +18,9 @@ public class TrelloClient {
     @Value("${trello.api.endpoint.prod}")
     private String trelloApiEndpoint;
 
+    @Value("${trello.member.username}")
+    private String trelloUsername;
+
     @Value("${trello.app.key}")
     private String trelloAppKey;
 
@@ -29,7 +32,7 @@ public class TrelloClient {
 
     public List<TrelloBoardDto> getTrelloBoards() {
 
-        URI url = UriComponentsBuilder.fromHttpUrl(trelloApiEndpoint + "/members/artur70617627/boards")
+        URI url = UriComponentsBuilder.fromHttpUrl(trelloApiEndpoint + "/members/" + trelloUsername + "/boards")
                 .queryParam("key", trelloAppKey)
                 .queryParam("token", trelloToken)
                 .queryParam("fields", "name,id")
