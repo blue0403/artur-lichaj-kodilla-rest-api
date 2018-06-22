@@ -12,17 +12,8 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class CreatedTrelloCard {
+public class TrelloAttachmentsByTypeDto {
 
-    @JsonProperty("id")
-    private String id;
-
-    @JsonProperty("name")
-    private String name;
-
-    @JsonProperty("shortUrl")
-    private String shortUrl;
-
-    @JsonProperty("badges")
-    private List<TrelloBadgesDto> badges;
+    @JsonProperty("trello")
+    private List<TrelloTrelloDto> trello;
 }
