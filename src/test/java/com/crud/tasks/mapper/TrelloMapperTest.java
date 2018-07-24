@@ -1,9 +1,6 @@
 package com.crud.tasks.mapper;
 
-import com.crud.tasks.domain.TrelloBoard;
-import com.crud.tasks.domain.TrelloBoardDto;
-import com.crud.tasks.domain.TrelloList;
-import com.crud.tasks.domain.TrelloListDto;
+import com.crud.tasks.domain.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -115,14 +112,32 @@ public class TrelloMapperTest {
     @Test
     public void shouldMapToCardDto() {
         //Given
+        TrelloCard trelloCard = new TrelloCard(
+                "Test_task","Test_description","top","test_id");
+
         //When
+        TrelloCardDto trelloCardDto = trelloMapper.mapToCardDto(trelloCard);
+
         //Then
+        assertEquals("Test_task", trelloCardDto.getName());
+        assertEquals("Test_description", trelloCardDto.getDescription());
+        assertEquals("top", trelloCardDto.getPos());
+        assertEquals("test_id", trelloCardDto.getListId());
     }
 
     @Test
     public void shouldMapToCard() {
         //Given
+        TrelloCardDto trelloCardDto = new TrelloCardDto(
+                "Test_task","Test_description","bottom","test_id");
+
         //When
+        TrelloCard trelloCard = trelloMapper.mapToCard(trelloCardDto);
+
         //Then
+        assertEquals("Test_task", trelloCard.getName());
+        assertEquals("Test_description", trelloCard.getDescription());
+        assertEquals("bottom", trelloCard.getPos());
+        assertEquals("test_id", trelloCard.getListId());
     }
 }
