@@ -79,15 +79,37 @@ public class TrelloMapperTest {
     @Test
     public void shouldMapToList() {
         //Given
+        TrelloListDto trelloListDto1 = new TrelloListDto("1", "Test_list_1", true);
+        TrelloListDto trelloListDto2 = new TrelloListDto("2", "Test_list_2", false);
+
+        List<TrelloListDto> trelloListDtos = new ArrayList<>();
+        trelloListDtos.add(trelloListDto1);
+        trelloListDtos.add(trelloListDto2);
+
         //When
+        List<TrelloList> trelloLists = trelloMapper.mapToList(trelloListDtos);
+
         //Then
+        assertEquals(2, trelloLists.size());
     }
 
     @Test
     public void shouldMapToListDto() {
         //Given
+        TrelloList trelloList1 = new TrelloList("1", "Test_list_1", true);
+        TrelloList trelloList2 = new TrelloList("2", "Test_list_2", false);
+        TrelloList trelloList3 = new TrelloList("3", "Test_list_3", false);
+
+        List<TrelloList> trelloLists = new ArrayList<>();
+        trelloLists.add(trelloList1);
+        trelloLists.add(trelloList2);
+        trelloLists.add(trelloList3);
+
         //When
+        List<TrelloListDto> trelloListDtos = trelloMapper.mapToListDto(trelloLists);
+
         //Then
+        assertEquals(3, trelloListDtos.size());
     }
 
     @Test
