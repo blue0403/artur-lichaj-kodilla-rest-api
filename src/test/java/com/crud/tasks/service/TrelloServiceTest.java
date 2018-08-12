@@ -1,7 +1,7 @@
 package com.crud.tasks.service;
 
-import com.crud.tasks.domain.TrelloBoardDto;
-import com.crud.tasks.domain.TrelloListDto;
+import com.crud.tasks.config.AdminConfig;
+import com.crud.tasks.domain.*;
 import com.crud.tasks.trello.client.TrelloClient;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,6 +14,9 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -24,6 +27,12 @@ public class TrelloServiceTest {
 
     @Mock
     private TrelloClient trelloClient;
+
+    @Mock
+    private AdminConfig adminConfig;
+
+    @Mock
+    private SimpleEmailService simpleEmailService;
 
     @Test
     public void shouldFetchEmptyList() {
@@ -42,5 +51,37 @@ public class TrelloServiceTest {
         //Then
         assertNotNull(trelloBoardDtos);
         assertEquals(0, trelloBoardDtos.size());
+    }
+
+    @Test
+    public void shouldCreateNewCardAndSendEmail() {
+        //Given
+        TrelloCardDto trelloCardDto = new TrelloCardDto(
+                "Test task",
+                "Test description",
+                "top",
+                "test_id"
+        );
+
+        TrelloBadgesDto test_badges = new TrelloBadgesDto();
+
+        CreatedTrelloCardDto createdTrelloCardDto = new CreatedTrelloCardDto(
+                "1",
+                "Test task",
+                "http://test.com",
+                test_badges
+        );
+
+        when(trelloClient.createNewCard(trelloCardDto)).thenReturn(createdTrelloCardDto);
+        when(adminConfig.getAdminMail()).thenReturn("test@test.com");
+
+        //When
+        CreatedTrelloCardDto newCard = trelloService.createTrelloCard(trelloCardDto);
+
+        //Then
+        assertNotNull(newCard);
+        assertEquals("Test task", newCard.getName());
+        assertNotNull(newCard.getBadges());
+        verify(simpleEmailService, times(1)).send(any(Mail.class));
     }
 }
