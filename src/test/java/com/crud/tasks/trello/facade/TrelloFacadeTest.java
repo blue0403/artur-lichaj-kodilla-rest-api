@@ -1,9 +1,6 @@
 package com.crud.tasks.trello.facade;
 
-import com.crud.tasks.domain.TrelloBoard;
-import com.crud.tasks.domain.TrelloBoardDto;
-import com.crud.tasks.domain.TrelloList;
-import com.crud.tasks.domain.TrelloListDto;
+import com.crud.tasks.domain.*;
 import com.crud.tasks.mapper.TrelloMapper;
 import com.crud.tasks.service.TrelloService;
 import com.crud.tasks.trello.validator.TrelloValidator;
@@ -16,7 +13,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Matchers.anyList;
 import static org.mockito.Mockito.when;
 
@@ -100,5 +98,37 @@ public class TrelloFacadeTest {
                 assertEquals(false, trelloListDto.isClosed());
             });
         });
+    }
+
+    @Test
+    public void shouldCreateCard() {
+        //Given
+        TrelloCardDto trelloCardDto = new TrelloCardDto(
+                "Test task",
+                "Test description",
+                "top",
+                "test_id"
+        );
+        TrelloTrelloDto trelloDto = new TrelloTrelloDto(3, 5);
+        TrelloAttachmentsByTypeDto attachmentsByTypeDto = new TrelloAttachmentsByTypeDto(trelloDto);
+        TrelloBadgesDto badges = new TrelloBadgesDto(15, attachmentsByTypeDto);
+
+        CreatedTrelloCardDto createdTrelloCardDto = new CreatedTrelloCardDto(
+                "1",
+                "Test task",
+                "http://test.com",
+                badges
+        );
+
+        when(trelloFacade.createCard(trelloCardDto)).thenReturn(createdTrelloCardDto);
+
+        //When
+        CreatedTrelloCardDto TrelloCardDto = trelloFacade.createCard(trelloCardDto);
+
+        //Then
+        assertEquals("1", TrelloCardDto.getId());
+        assertEquals("Test task", TrelloCardDto.getName());
+        assertEquals("http://test.com", TrelloCardDto.getShortUrl());
+        assertNotNull(TrelloCardDto.getBadges());
     }
 }
