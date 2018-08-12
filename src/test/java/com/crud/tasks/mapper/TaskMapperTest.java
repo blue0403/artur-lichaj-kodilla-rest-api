@@ -27,4 +27,17 @@ public class TaskMapperTest {
         assertNotNull(task);
         assertEquals("test_title", task.getTitle());
     }
+
+    @Test
+    public void shouldMapToTaskDto() {
+        //Given
+        Task task = new Task(1L,"test_title","test_content");
+
+        //When
+        TaskDto taskDto =  taskMapper.mapToTaskDto(task);
+
+        //Then
+        assertNotNull(taskDto);
+        assertEquals("test_content", taskDto.getContent());
+    }
 }
