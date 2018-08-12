@@ -62,8 +62,9 @@ public class TrelloServiceTest {
                 "top",
                 "test_id"
         );
-
-        TrelloBadgesDto test_badges = new TrelloBadgesDto();
+        TrelloTrelloDto trelloDto = new TrelloTrelloDto(3, 5);
+        TrelloAttachmentsByTypeDto attachmentsByTypeDto = new TrelloAttachmentsByTypeDto(trelloDto);
+        TrelloBadgesDto test_badges = new TrelloBadgesDto(15, attachmentsByTypeDto);
 
         CreatedTrelloCardDto createdTrelloCardDto = new CreatedTrelloCardDto(
                 "1",
@@ -82,6 +83,9 @@ public class TrelloServiceTest {
         assertNotNull(newCard);
         assertEquals("Test task", newCard.getName());
         assertNotNull(newCard.getBadges());
+        assertEquals(15, newCard.getBadges().getVotes());
+        assertEquals(3, newCard.getBadges().getAttachments().getTrello().getBoard());
+        assertEquals(5, newCard.getBadges().getAttachments().getTrello().getCard());
         verify(simpleEmailService, times(1)).send(any(Mail.class));
     }
 }
