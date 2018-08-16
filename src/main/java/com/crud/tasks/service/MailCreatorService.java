@@ -34,6 +34,7 @@ public class MailCreatorService {
         Context context = new Context();
         context.setVariable("message", message);
         context.setVariable("tasks_url", "https://blue0403.github.io/");
+        context.setVariable("preview_message", "YOU HAVE NEW CARD ON TRELLO");
         context.setVariable("button", "Visit website");
         context.setVariable("show_button", false);
         context.setVariable("is_friend", false);
