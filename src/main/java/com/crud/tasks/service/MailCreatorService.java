@@ -43,4 +43,24 @@ public class MailCreatorService {
         context.setVariable("application_functionality", functionality);
         return templateEngine.process("mail/created-trello-card-mail", context);
     }
+
+    public String buildSchedulerEmail(String message) {
+
+        ArrayList<String> functionality = new ArrayList<>();
+        functionality.add("Sends update everyday at 10 am");
+        functionality.add("Provides number of active tasks");
+
+        Context context = new Context();
+        context.setVariable("message", message);
+        context.setVariable("task_url", "https://blue0403.github.io/");
+        context.setVariable("preview_message", "NUMBER OF TASKS IN DATABASE");
+        context.setVariable("button", "Visit Crud App");
+        context.setVariable("show_button", true);
+        context.setVariable("is_friend", false);
+        context.setVariable("admin_name", adminConfig.getAdminName());
+        context.setVariable("company_config", companyConfig);
+        context.setVariable("scheduler_functionality", functionality);
+
+        return templateEngine.process("mail/scheduled-mail", context);
+    }
 }
