@@ -26,6 +26,8 @@ public class MailCreatorService {
         context.setVariable("message", message);
         context.setVariable("tasks_url", "https://blue0403.github.io/");
         context.setVariable("button", "Visit website");
+        context.setVariable("show_button", false);
+        context.setVariable("is_friend", false);
         context.setVariable("admin_name", adminConfig.getAdminName());
         context.setVariable("company_name", companyConfig.getCompanyName());
         context.setVariable("company_goal", companyConfig.getCompanyGoal());
