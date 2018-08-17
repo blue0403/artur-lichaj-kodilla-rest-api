@@ -41,7 +41,7 @@ public class TrelloServiceTest {
         trelloLists.add(new TrelloListDto("1", "test_list", false));
 
         List<TrelloBoardDto> trelloBoards = new ArrayList<>();
-        trelloBoards.add(new TrelloBoardDto("test", "1", trelloLists));
+        trelloBoards.add(new TrelloBoardDto("1", "test", trelloLists));
 
         when(trelloClient.getTrelloBoards()).thenReturn(new ArrayList<>());
 
