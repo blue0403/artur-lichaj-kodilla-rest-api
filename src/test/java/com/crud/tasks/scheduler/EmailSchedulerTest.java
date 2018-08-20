@@ -38,6 +38,6 @@ public class EmailSchedulerTest {
         emailScheduler.sendInformationEmail();
 
         //Then
-        verify(simpleEmailService, times(1)).send(any(Mail.class));
+        verify(simpleEmailService, times(1)).sendScheduler(any(Mail.class));
     }
 }
